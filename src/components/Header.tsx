@@ -12,6 +12,8 @@ const Header = () => {
   const getSubtitle = () => {
     if (location.pathname === "/assessment") {
       return "Self-Assessment Tools";
+    } else if (location.pathname === "/doctor") {
+      return "Clinical Dashboard";
     }
     return "Patient Health Dashboard";
   };

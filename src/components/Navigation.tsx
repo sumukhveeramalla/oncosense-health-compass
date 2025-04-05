@@ -1,15 +1,16 @@
 
-import { Home, PieChart, Bell, Settings, User, ClipboardList } from "lucide-react";
+import { Home, PieChart, Bell, Settings, User, ClipboardList, Stethoscope } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Navigation = ({ activeTab = "home" }) => {
   const tabs = [
-    { id: "home", label: "Home", icon: Home },
-    { id: "stats", label: "Stats", icon: PieChart },
-    { id: "assessment", label: "Assessment", icon: ClipboardList },
-    { id: "notifications", label: "Alerts", icon: Bell },
-    { id: "profile", label: "Profile", icon: User },
+    { id: "home", label: "Home", icon: Home, path: "/" },
+    { id: "stats", label: "Stats", icon: PieChart, path: "/stats" },
+    { id: "assessment", label: "Assessment", icon: ClipboardList, path: "/assessment" },
+    { id: "doctor", label: "Doctor", icon: Stethoscope, path: "/doctor" },
+    { id: "profile", label: "Profile", icon: User, path: "/profile" },
   ];
 
   return (
@@ -23,9 +24,12 @@ const Navigation = ({ activeTab = "home" }) => {
               "flex flex-col items-center gap-1 h-auto py-1 px-2",
               activeTab === tab.id ? "text-primary" : "text-muted-foreground"
             )}
+            asChild
           >
-            <tab.icon size={20} />
-            <span className="text-[10px]">{tab.label}</span>
+            <Link to={tab.path}>
+              <tab.icon size={20} />
+              <span className="text-[10px]">{tab.label}</span>
+            </Link>
           </Button>
         ))}
       </div>
