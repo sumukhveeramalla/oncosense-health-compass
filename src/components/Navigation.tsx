@@ -1,17 +1,14 @@
 
-import { Home, PieChart, Bell, Settings, User } from "lucide-react";
+import { Home, PieChart, Bell, Settings, User, ClipboardList } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-const Navigation = () => {
-  // Normally this would be driven by a router, but for this demo we'll use a static active state
-  const activeTab = "home";
-
+const Navigation = ({ activeTab = "home" }) => {
   const tabs = [
     { id: "home", label: "Home", icon: Home },
     { id: "stats", label: "Stats", icon: PieChart },
+    { id: "assessment", label: "Assessment", icon: ClipboardList },
     { id: "notifications", label: "Alerts", icon: Bell },
-    { id: "settings", label: "Settings", icon: Settings },
     { id: "profile", label: "Profile", icon: User },
   ];
 
