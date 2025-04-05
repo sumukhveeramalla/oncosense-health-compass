@@ -14,24 +14,26 @@ const Navigation = ({ activeTab = "home" }) => {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 py-2 px-4 z-10">
-      <div className="flex justify-between items-center">
-        {tabs.map((tab) => (
-          <Button
-            key={tab.id}
-            variant="ghost"
-            className={cn(
-              "flex flex-col items-center gap-1 h-auto py-1 px-2",
-              activeTab === tab.id ? "text-primary" : "text-muted-foreground"
-            )}
-            asChild
-          >
-            <Link to={tab.path}>
-              <tab.icon size={20} />
-              <span className="text-[10px]">{tab.label}</span>
-            </Link>
-          </Button>
-        ))}
+    <div className="bg-white border-b border-gray-100 py-2 px-4">
+      <div className="container mx-auto">
+        <div className="flex justify-between items-center">
+          {tabs.map((tab) => (
+            <Button
+              key={tab.id}
+              variant="ghost"
+              className={cn(
+                "flex items-center gap-2 h-auto py-2 px-3",
+                activeTab === tab.id ? "text-primary border-b-2 border-primary" : "text-muted-foreground"
+              )}
+              asChild
+            >
+              <Link to={tab.path}>
+                <tab.icon size={20} />
+                <span>{tab.label}</span>
+              </Link>
+            </Button>
+          ))}
+        </div>
       </div>
     </div>
   );

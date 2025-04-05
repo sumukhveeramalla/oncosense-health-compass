@@ -1,135 +1,164 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { 
+  LineChart, 
+  Line, 
+  AreaChart, 
+  Area, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer 
+} from "recharts";
 
 const LongitudinalAnalysis = () => {
-  // Sample data for longitudinal changes
-  const longTermData = [
-    { month: 'Jan', value: 45, threshold: 50 },
-    { month: 'Feb', value: 48, threshold: 50 },
-    { month: 'Mar', value: 52, threshold: 50 },
-    { month: 'Apr', value: 55, threshold: 50 },
-    { month: 'May', value: 59, threshold: 50 },
-    { month: 'Jun', value: 62, threshold: 50 },
-    { month: 'Jul', value: 60, threshold: 50 },
-    { month: 'Aug', value: 58, threshold: 50 },
-    { month: 'Sep', value: 63, threshold: 50 },
-    { month: 'Oct', value: 65, threshold: 50 },
-    { month: 'Nov', value: 68, threshold: 50 },
-    { month: 'Dec', value: 72, threshold: 50 },
+  // Sample data for longitudinal analysis
+  const timeSeriesData = [
+    { month: "Jan", value: 28, predictedValue: 29 },
+    { month: "Feb", value: 32, predictedValue: 34 },
+    { month: "Mar", value: 35, predictedValue: 38 },
+    { month: "Apr", value: 40, predictedValue: 42 },
+    { month: "May", value: 45, predictedValue: 47 },
+    { month: "Jun", value: 50, predictedValue: 52 },
+    { month: "Jul", value: 55, predictedValue: 56 },
+    { month: "Aug", value: 53, predictedValue: 59 },
+    { month: "Sep", value: 58, predictedValue: 61 },
+    { month: "Oct", value: 62, predictedValue: 64 },
+    { month: "Nov", value: 65, predictedValue: 67 },
+    { month: "Dec", value: 64, predictedValue: 70 },
   ];
-  
-  const growthRates = [
-    { period: '2022 Q1', value: 0.5 },
-    { period: '2022 Q2', value: 0.7 },
-    { period: '2022 Q3', value: 1.2 },
-    { period: '2022 Q4', value: 2.1 },
-    { period: '2023 Q1', value: 3.4 },
-    { period: '2023 Q2', value: 3.8 },
-    { period: '2023 Q3', value: 4.2 },
-    { period: '2023 Q4', value: 4.0 },
+
+  const densityTrendData = [
+    { month: "Jan", value: 1.02 },
+    { month: "Feb", value: 1.03 },
+    { month: "Mar", value: 1.05 },
+    { month: "Apr", value: 1.07 },
+    { month: "May", value: 1.08 },
+    { month: "Jun", value: 1.06 },
+    { month: "Jul", value: 1.07 },
+    { month: "Aug", value: 1.08 },
+    { month: "Sep", value: 1.10 },
+    { month: "Oct", value: 1.11 },
+    { month: "Nov", value: 1.12 },
+    { month: "Dec", value: 1.11 },
   ];
-  
-  // Predictive trend data showing forecasted values
-  const predictiveData = [
-    { month: 'Jan', actual: 72, predicted: null },
-    { month: 'Feb', actual: 74, predicted: null },
-    { month: 'Mar', actual: 76, predicted: null },
-    { month: 'Apr', actual: null, predicted: 78 },
-    { month: 'May', actual: null, predicted: 80 },
-    { month: 'Jun', actual: null, predicted: 81 },
-    { month: 'Jul', actual: null, predicted: 83 },
-    { month: 'Aug', actual: null, predicted: 85 },
+
+  const elasticityTrendData = [
+    { month: "Jan", value: 0.42 },
+    { month: "Feb", value: 0.41 },
+    { month: "Mar", value: 0.40 },
+    { month: "Apr", value: 0.39 },
+    { month: "May", value: 0.38 },
+    { month: "Jun", value: 0.39 },
+    { month: "Jul", value: 0.37 },
+    { month: "Aug", value: 0.36 },
+    { month: "Sep", value: 0.35 },
+    { month: "Oct", value: 0.34 },
+    { month: "Nov", value: 0.33 },
+    { month: "Dec", value: 0.32 },
   ];
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Longitudinal Analysis</CardTitle>
-        <CardDescription>Long-term changes and predictive trends</CardDescription>
+        <CardDescription>Long-term change visualization</CardDescription>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue="changes">
+        <Tabs defaultValue="growth">
           <TabsList className="mb-4">
-            <TabsTrigger value="changes">Long-Term Changes</TabsTrigger>
-            <TabsTrigger value="growth">Growth Rates</TabsTrigger>
-            <TabsTrigger value="predictive">Predictive Trends</TabsTrigger>
+            <TabsTrigger value="growth">Growth Rate</TabsTrigger>
+            <TabsTrigger value="density">Density Trends</TabsTrigger>
+            <TabsTrigger value="elasticity">Elasticity</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="changes">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <h4 className="text-sm font-medium">Annual Progression</h4>
-                <div className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
-                  +27 points over 12 months
-                </div>
-              </div>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={longTermData} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" />
-                    <YAxis domain={[30, 80]} />
-                    <Tooltip />
-                    <ReferenceLine y={50} stroke="red" strokeDasharray="3 3" />
-                    <Line type="monotone" dataKey="value" stroke="#3b82f6" strokeWidth={2} dot={{ r: 3 }} activeDot={{ r: 5 }} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-              <div className="text-xs text-muted-foreground">
-                <span className="inline-block w-3 h-3 bg-red-400 mr-1"></span> Intervention threshold (score of 50)
-              </div>
-            </div>
-          </TabsContent>
-          
           <TabsContent value="growth">
-            <div className="space-y-2">
-              <h4 className="text-sm font-medium">Calculated Growth Rates (%/month)</h4>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={growthRates} margin={{ top: 5, right: 5, bottom: 20, left: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="period" angle={-45} textAnchor="end" />
-                    <YAxis />
-                    <Tooltip />
-                    <Bar dataKey="value" fill="#8884d8" />
-                  </BarChart>
-                </ResponsiveContainer>
+            <div className="h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={timeSeriesData} margin={{ top: 5, right: 20, bottom: 20, left: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip />
+                  <Line 
+                    type="monotone" 
+                    dataKey="value" 
+                    stroke="#8884d8" 
+                    strokeWidth={2}
+                    name="Measured Value" 
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="predictedValue" 
+                    stroke="#82ca9d" 
+                    strokeDasharray="5 5"
+                    strokeWidth={2}
+                    name="Predicted Trend" 
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="mt-4 text-sm text-muted-foreground">
+              <div className="flex justify-between items-center">
+                <div>
+                  <span className="inline-block w-3 h-3 rounded-full bg-[#8884d8] mr-2"></span>
+                  <span>Measured Growth Rate</span>
+                </div>
+                <div>
+                  <span className="inline-block w-3 h-3 rounded-full bg-[#82ca9d] mr-2"></span>
+                  <span>Predicted Trajectory</span>
+                </div>
               </div>
-              <div className="p-2 bg-blue-50 rounded-md text-xs">
-                <strong>Analysis:</strong> Growth rate has increased from 0.5% to 4.0% per month over the past 8 quarters, indicating accelerating change that warrants monitoring.
-              </div>
+              <p className="mt-2">Predictive analysis indicates a 14% annual change rate based on the current trajectory.</p>
             </div>
           </TabsContent>
           
-          <TabsContent value="predictive">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <h4 className="text-sm font-medium">3-Month Projection</h4>
-                <div className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">
-                  Predicted to exceed threshold
-                </div>
-              </div>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={predictiveData} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" />
-                    <YAxis domain={[65, 90]} />
-                    <Tooltip />
-                    <ReferenceLine y={80} stroke="red" label="Critical Threshold" />
-                    <Line type="monotone" dataKey="actual" stroke="#3b82f6" strokeWidth={2} dot={{ r: 3 }} name="Actual" />
-                    <Line type="monotone" dataKey="predicted" stroke="#f97316" strokeWidth={2} strokeDasharray="5 5" dot={{ r: 3 }} name="Predicted" />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-              <div className="p-2 bg-amber-50 rounded-md">
-                <h5 className="text-xs font-medium text-amber-800">Recommendation</h5>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Based on predictive analysis, consider intervention within 45 days to prevent progression beyond critical threshold.
-                </p>
-              </div>
+          <TabsContent value="density">
+            <div className="h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={densityTrendData} margin={{ top: 5, right: 20, bottom: 20, left: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis domain={[0.95, 1.2]} />
+                  <Tooltip />
+                  <Area 
+                    type="monotone" 
+                    dataKey="value" 
+                    stroke="#ff7300" 
+                    fill="#ff7300" 
+                    fillOpacity={0.3}
+                    name="Tissue Density" 
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="mt-4 text-sm text-muted-foreground">
+              <p>Density measurements show a consistent upward trend over the 12-month period, with an 8.8% total increase.</p>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="elasticity">
+            <div className="h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={elasticityTrendData} margin={{ top: 5, right: 20, bottom: 20, left: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis domain={[0.3, 0.5]} />
+                  <Tooltip />
+                  <Line 
+                    type="monotone" 
+                    dataKey="value" 
+                    stroke="#3b82f6" 
+                    strokeWidth={2}
+                    name="Elasticity Coefficient" 
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="mt-4 text-sm text-muted-foreground">
+              <p>Tissue elasticity coefficient has decreased by 23.8% over the observed period, indicating significant tissue property changes.</p>
             </div>
           </TabsContent>
         </Tabs>
