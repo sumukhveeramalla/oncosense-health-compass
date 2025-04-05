@@ -1,7 +1,6 @@
 
 import Header from "@/components/Header";
 import Navigation from "@/components/Navigation";
-import HealthScore from "@/components/HealthScore";
 import TissueAnalysis from "@/components/TissueAnalysis";
 import MonitoringMetrics from "@/components/MonitoringMetrics";
 import PersonalInsights from "@/components/PersonalInsights";
@@ -19,8 +18,6 @@ const Index = () => {
             <h1 className="text-2xl font-bold text-gray-900 mb-1">Good morning, Sarah</h1>
             <p className="text-sm text-muted-foreground">Your breast health dashboard</p>
           </div>
-          
-          <HealthScore />
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <TissueAnalysis />
